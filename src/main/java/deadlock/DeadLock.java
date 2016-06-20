@@ -9,16 +9,15 @@ public class DeadLock {
         Resource r2 = new Resource("r2");
         Resource r3 = new Resource("r3");
 
-        Thread t1 = new Thread(new SyncThread(r1, r2), "t1");
-        Thread t2 = new Thread(new SyncThread(r2, r3), "t2");
-        Thread t3 = new Thread(new SyncThread(r3, r1), "t3");
+        Thread t1 = new Thread(new ResourceThread(r1, r2), "t1");
+        Thread t2 = new Thread(new ResourceThread(r2, r3), "t2");
+        Thread t3 = new Thread(new ResourceThread(r3, r1), "t3");
 
         t1.start();
         //Thread.sleep(5000);
         t2.start();
         //Thread.sleep(5000);
         t3.start();
-
     }
 
 }
@@ -39,11 +38,11 @@ class Resource {
     }
 }
 
-class SyncThread implements Runnable {
+class ResourceThread implements Runnable {
     private Resource rA;
     private Resource rB;
 
-    public SyncThread(Resource rA, Resource rB) {
+    public ResourceThread(Resource rA, Resource rB) {
         this.rA = rA;
         this.rB = rB;
     }
