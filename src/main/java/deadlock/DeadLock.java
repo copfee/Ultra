@@ -10,14 +10,14 @@ public class DeadLock {
         Resource r3 = new Resource("r3");
 
         Thread t1 = new Thread(new ResourceThread(r1, r2), "t1");
-        Thread t2 = new Thread(new ResourceThread(r2, r3), "t2");
-        Thread t3 = new Thread(new ResourceThread(r3, r1), "t3");
+        Thread t2 = new Thread(new ResourceThread(r2, r1), "t2");
+        //Thread t3 = new Thread(new ResourceThread(r3, r1), "t3");
 
         t1.start();
         //Thread.sleep(5000);
         t2.start();
         //Thread.sleep(5000);
-        t3.start();
+        //t3.start();
     }
 
 }
@@ -50,6 +50,7 @@ class ResourceThread implements Runnable {
     @Override
     public void run() {
         String name = Thread.currentThread().getName();
+        //synchronized (Resource.class) {
         System.out.println(name + " acquiring lock on " + rA.getName());
         synchronized (rA) {
             System.out.println(name + " acquired lock on " + rA.getName());
